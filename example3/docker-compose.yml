@@ -1,0 +1,20 @@
+lb:
+  image: rancher/load-balancer-service
+  ports:
+    - 80:80
+  load_balancer_config:
+    name: lb config
+  labels:
+    io.rancher.loadbalancer.target.web: 80=8080
+  links:
+    - web:web
+
+web:
+  image: piotrgiedziun/sample-rancher:latest
+  links:
+    - postgres:postgres
+  env_file: .env
+  command: /usr/local/bin/gunicorn demo.wsgi:application -w 2 -b :8000 --reload
+
+postgres:
+  image: postgres:latest

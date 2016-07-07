@@ -1,0 +1,8 @@
+web:
+  scale: 1
+  upgrade_strategy:
+    start_first: true
+postgres:
+  scale: 1
+lb:
+  scale: 1

@@ -1,0 +1,25 @@
+version: '2'
+services:
+  lb:
+    image: dockercloud/haproxy
+    links:
+      - web
+    environment:
+      - DOCKER_TLS_VERIFY
+      - DOCKER_HOST
+      - DOCKER_CERT_PATH
+    volumes:
+      - $DOCKER_CERT_PATH:$DOCKER_CERT_PATH
+    ports:
+      - 80:80
+  web:
+    build: ./web
+    depends_on:
+      - postgres
+    env_file: .env
+    stdin_open: true
+    expose:
+      - 8000
+    command: /usr/local/bin/gunicorn demo.wsgi:application -w 2 -b :8000 --reload
+  postgres:
+    image: postgres:latest

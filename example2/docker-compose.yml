@@ -1,0 +1,22 @@
+version: '2'
+services:
+  lb:
+    image: dockercloud/haproxy
+    links:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+  web:
+    build: ./web
+    depends_on:
+      - postgres
+    env_file: .env
+    volumes:
+      - ./web:/usr/src/app
+    expose:
+      - 8000
+    command: /usr/local/bin/gunicorn demo.wsgi:application -w 2 -b :8000 --reload
+  postgres:
+    image: postgres:latest
