@@ -1,13 +1,13 @@
 # Docker & rancher 101
 
-    ## Required
+## Required
 
-        docker
-        docker-compose
-        rancher-compose
+    docker
+    docker-compose
+    rancher-compose
 
-    ## Required images
+## Required images
 
-        docker pull dockercloud/haproxy
-        docker pull postgres
-        docker pull python:2.7
+    docker pull dockercloud/haproxy
+    docker pull postgres
+    docker pull python:2.7
