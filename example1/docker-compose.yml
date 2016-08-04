@@ -1,15 +1,18 @@
 version: '2'
-services:
-  web:
-    build: ./web
-    depends_on:
-      - postgres
-    environment:
-      - SECRET_KEY=q%_==j)-e@i526$jd630uy7cospk!^kx2j*b!g36f!cx6&k8d2
-    ports:
-      - 80:8000
-    # volumes:
-    #   - ./web:/usr/src/app
-    command: python manage.py runserver 0.0.0.0:8000
-  postgres:
-    image: postgres:latest
+  services:
+    web:
+      build: ./web
+      depends_on:
+        - postgres
+      environment:
+        - SECRET_KEY=q%_==j)-e@i526$jd630uy7cospk!^kx2j*b!g36f!cx6&k8d2
+      ports:
+        - 80:8000
+      volumes:
+        - ./web:/usr/src/app
+        - phpcompose:/usr/src/app/test
+      command: python manage.py runserver 0.0.0.0:8000
+    postgres:
+      image: postgres:latest
+  volumes:
+    phpcompose:
